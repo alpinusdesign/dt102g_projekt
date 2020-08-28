@@ -40,13 +40,6 @@ namespace dt102g_projekt.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        public IActionResult Details()
-        {
-
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> IndexAsync([FromForm]IndexViewModel indexViewModel)
         {
@@ -89,18 +82,6 @@ namespace dt102g_projekt.Controllers
             indexViewModel.Posts = posts;
 
             return View(indexViewModel);
-        }
-
-        [HttpGet]
-        public IActionResult CreatePost()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult Edit()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
