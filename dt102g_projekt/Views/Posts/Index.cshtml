@@ -1,0 +1,40 @@
+﻿@model IEnumerable<dt102g_projekt.Models.Post>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <section class="container col-md-8">
+        <h1 class="pt-4">Alla nyheter</h1>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            // Only allow logged in users to write posts.
+            <a class="btn btn-primary w-100 mt-3 mtb-3" asp-action="Create">Skriv nytt inlägg</a>
+        }
+            @foreach (var item in Model)
+            {
+                <article class="mt-4 mb-4">
+                    <div class="col">
+                        <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+                        <span class="text-muted"><i class="fas fa-calendar-alt pr-2 pb-2"></i>@Html.DisplayFor(modelItem => item.DatePosted)</span>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.Content)
+                        </p>
+                    </div>
+                    <div class="col-md d-flex justify-content-between">
+                        <a asp-action="Details" asp-route-id="@item.Id">Visa enskilt</a>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            // Only allow logged in users to edit and delete posts.
+                            <div>
+                                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Redigera</a>
+                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Radera</a>
+                            </div>
+                        }
+                    </div>
+                </article>
+            }
+        </section>

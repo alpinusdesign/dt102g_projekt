@@ -1,0 +1,53 @@
+﻿@model dt102g_projekt.Models.Post
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="container">
+    <h1>Radera nyhetsinlägg</h1>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h3>Är du säker på att du vill radera detta inlägg?</h3>
+            <div>
+                <dl class="container">
+                    <dt class="row">
+                        @Html.DisplayNameFor(model => model.Title)
+                    </dt>
+                    <dd class="row">
+                        @Html.DisplayFor(model => model.Title)
+                    </dd>
+                    <dt class="row">
+                        @Html.DisplayNameFor(model => model.DatePosted)
+                    </dt>
+                    <dd class="row">
+                        @Html.DisplayFor(model => model.DatePosted)
+                    </dd>
+                    <dt class="row">
+                        @Html.DisplayNameFor(model => model.Content)
+                    </dt>
+                    <dd class="row">
+                        @Html.DisplayFor(model => model.Content)
+                    </dd>
+                </dl>
+
+                <form asp-action="Delete">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        // Only allow logged in users to delete posts.
+                        <input type="hidden" asp-for="Id" />
+                        <input type="submit" value="Radera nyhetsinlägg" class="btn btn-danger" />
+                    }
+                    <a class="m-2 d-block text-center" asp-action="Index">Alla nyheter</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

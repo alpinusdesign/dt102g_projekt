@@ -1,8 +1,128 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model dt102g_projekt.ViewModels.IndexViewModel
+@{
+
+    ViewData["Title"] = "RenGöran - Städ och sanering";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section id="section-home">
+    <img src="~/img/img.jpg" />
+</section>
+<section id="section-news" class="container">
+    <h1>Nyheter</h1>
+    <div class="row">
+        <div id="news-container" class="col-md-6">
+            @if (Model.Posts.Count > 0)
+            {
+                <h2>@Model.Posts[0].Title</h2>
+
+                <span class="text-muted"><i class="fas fa-calendar-alt pr-2"></i>@Html.DisplayFor(model => model.Posts[0].DatePosted)</span>
+                <p>
+                    @Model.Posts[0].Content
+                </p>
+            }
+        </div>
+        <div class="col-md-6">
+            <h2 class="text-center">Fler nyheter</h2>
+            <ul class="list-group">
+                @if (Model.Posts.Count > 0)
+                {
+                    foreach(var post in Model.Posts.Skip(1))
+                    {
+                        <li class="list-group-item"><a class="d-block" asp-action="Details" asp-controller="Posts" asp-route-id="@post.Id">@post.Title</a></li>
+                    }
+                }
+            </ul>
+            <a class="text-center d-block p-2" asp-controller="Posts" asp-action="Index">Alla nyheter</a>
+        </div>
+    </div>
+</section>
+<section id="section-about" class="container">
+    <h1>Om oss</h1>
+    <img class="mt-3 mb-5" src="~/img/img2.jpg"/>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Löksås ipsum</h2>
+            <p>
+                Löksås ipsum annan på träutensilierna bra är äng del i, sjö och hwila blev verkligen strand söka dag, söka häst stig för mjuka som ska mot.
+                Smultron sin brunsås och mot och vidsträckt vad sig träutensilierna gör, dunge söka genom upprätthållande kunde björnbär upprätthållande samtidigt plats, ingalunda för genom del som icke vi räv av.
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h2>Dålor sitt amett</h2>
+            <p>
+                Miljoner groda miljoner vi rännil samma faktor smultron häst, stora om häst gör mot att dimmhöljd sällan, som erfarenheter där färdväg tiden hans björnbär.
+            </p>
+            <p>
+                Sax vad annat hans sista göras varit ser, av fram omfångsrik redan faktor nu del, sjö se regn denna färdväg gamla.
+            </p>
+        </div>
+    </div>
+</section>
+<section id="section-services" class="container">
+    <div class="container col-md-8">
+        <h1>Tjänster</h1>
+        <p class="text-center">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="text-center">Städning</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-center">Sanering</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-center">Rensning</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+        </div>
+    </div>
+</section>
+<section id="section-contact" class="container col-lg-8">
+
+    <h1>Kontakt</h1>
+    <p class="text-center">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    </p>
+    <form class="form-group" asp-action="index" method="post">
+        @{
+            // Print out a message if an email has been sent.
+            if (ViewData["EmailConfirm"] != null)
+            {
+                <div class="alert alert-success" role="alert">
+                    <span>@ViewData["EmailConfirm"]</span>
+                </div>
+            }
+        }
+
+        <div class="form-row">
+            <div class="col-sm">
+                <label asp-for="ContactForm.Name"></label>
+                <input asp-for="ContactForm.Name" class="form-control" />
+                <span asp-validation-for="ContactForm.Name" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm">
+                <label asp-for="ContactForm.Email"></label>
+                <input asp-for="ContactForm.Email" class="form-control" />
+                <span asp-validation-for="ContactForm.Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ContactForm.Message"></label>
+            <textarea asp-for="ContactForm.Message" class="form-control" rows="5"></textarea>
+            <span asp-validation-for="ContactForm.Message" class="text-danger"></span>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Skicka meddelande" />
+    </form>
+
+</section>
